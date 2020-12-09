@@ -4,21 +4,17 @@
  */
 const numPairsDivisibleBy60 = function(time) {
   if (time.length < 2) return 0;
-  time.sort((a,b) => a-b);
-  let ans = 0;
-  for (let i = 0; i < time.length-1; i++) {
-    let left = i;
-    let right = time.length-1;
-    while (left < right) {
-      if ((time[left] + time[right])%60 === 0) {
-        ans++;
-      } else if (time[left]+time[right] < 60) {
-        break;
-      } 
-      right--;
+  let count = 0;
+  const remainder = new Array(60).fill(0);
+  for (let atime of time) {
+    if (atime%60 === 0) {
+      count += remainder[0];
+    } else {
+      count += remainder[60 - atime%60];
     }
+    remainder[atime%60]++;
   }
-  return ans;  
+  return count;  
 }
 
 module.exports = numPairsDivisibleBy60;
