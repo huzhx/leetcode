@@ -43,3 +43,14 @@ test('test4', () => {
   const expected = 0;
   expect(result).toBe(expected);
 });
+
+test('test5', () => {
+  const codeList = [
+    ['apple', 'apple'],
+    ['banana', 'anything', 'banana'],
+  ];
+  const shoppingCart = ['orange', 'apple', 'orange', 'apple', 'apple', 'banana', 'orange', 'banana'];
+  const result = isWinner(codeList, shoppingCart);
+  const expected = 1;
+  expect(result).toBe(expected);
+});
