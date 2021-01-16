@@ -1,4 +1,7 @@
 const isWinner = (codeList, shoppingCart) => {
+
+  if (codeList.length === 0) return 1;
+
   let codeListIndex = 0;
   for (let i = 0; i < shoppingCart.length; i++) {
     if (shoppingCart[i] === codeList[codeListIndex][0]) {
