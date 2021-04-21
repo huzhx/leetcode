@@ -1,36 +1,16 @@
+import { UnionFindByQuickUnion } from '../union-find/union-find';
+
 const friendCircles = (relationships) => {
-  const unionFind = new UnionFind();
+  const unionFind = new UnionFindByQuickUnion(relationships.length);
   for (let i = 0; i < relationships.length; i++) {
-    for (let j = 0; j < relationships[i].length; j++) {
+    for (let j = i + 1; j < relationships[i].length; j++) {
       if (relationships[i][j] === 1) {
         unionFind.union(i, j);
       }
     }
   }
 
-  return unionFind.size();
+  return unionFind.getGroups();
 };
-
-class UnionFind {
-  constructor() {
-    this.parent = {};
-  }
-
-  find(x) {
-    let res = this.parent[x] || x;
-    if (res !== x) {
-      this.parent[x] = res = this.find(res);
-    }
-    return res;
-  }
-
-  union(x, y) {
-    this.parent[this.find(y)] = this.find(x);
-  }
-
-  size() {
-    return new Set(Object.values(this.parent)).size;
-  }
-}
 
 export default friendCircles;
