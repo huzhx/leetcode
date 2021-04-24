@@ -106,4 +106,65 @@ class UnionFindByQuickUnion {
   }
 }
 
-export { UnionFindByQuickFind, UnionFindByQuickUnion };
+class UnionFindByQuickUnionWithRankOpt {
+  constructor(elementsNum) {
+    this.parent = []; // track the parent id of each element
+    this.rank = []; // track the height of the tree rooted by i
+    this.groups = elementsNum;
+    for (let i = 0; i < elementsNum; i++) {
+      this.parent[i] = i;
+      this.rank[i] = 1;
+    }
+  }
+
+  /**
+   * O(h) where h is the height of the tree
+   * @param {*} p
+   * @returns
+   */
+  find(p) {
+    while (p !== this.parent[p]) {
+      p = this.parent[p];
+    }
+    return p;
+  }
+
+  /**
+   * O(h)
+   * @param {*} p
+   * @param {*} q
+   * @returns
+   */
+  isConnected(p, q) {
+    return this.find(p) === this.find(q);
+  }
+
+  /**
+   * O(h)
+   * @param {*} p
+   * @param {*} q
+   * @returns
+   */
+  union(p, q) {
+    const pParent = this.find(p);
+    const qParent = this.find(q);
+    if (pParent === qParent) return;
+
+    if (this.rank[pParent] > this.rank[qParent]) {
+      this.parent[qParent] = pParent;
+    } else if (this.rank[qParent] > this.rank[pParent]) {
+      this.parent[pParent] = qParent;
+    } else {
+      this.parent[pParent] = qParent;
+      this.rank[qParent]++;
+    }
+
+    this.groups--;
+  }
+
+  getGroups() {
+    return this.groups;
+  }
+}
+
+export { UnionFindByQuickFind, UnionFindByQuickUnion, UnionFindByQuickUnionWithRankOpt };
