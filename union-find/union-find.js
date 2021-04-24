@@ -109,7 +109,7 @@ class UnionFindByQuickUnion {
 class UnionFindByQuickUnionWithRankOpt {
   constructor(elementsNum) {
     this.parent = []; // track the parent id of each element
-    this.rank = []; // track the height of the tree rooted by i
+    this.rank = []; // track the ~height of the tree rooted by i
     this.groups = elementsNum;
     for (let i = 0; i < elementsNum; i++) {
       this.parent[i] = i;
