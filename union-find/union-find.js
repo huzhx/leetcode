@@ -126,7 +126,7 @@ class UnionFindByQuickUnionWithRankOpt {
     if (p !== this.parent[p]) {
       this.parent[p] = this.find(this.parent[p]);
     }
-    return p;
+    return this.parent[p];
   }
 
   /**
