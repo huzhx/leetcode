@@ -1,6 +1,7 @@
 class UnionFindByQuickFind {
   constructor(elementsNum) {
     this.id = [];
+    this.groups = elementsNum;
     for (let i = 0; i < elementsNum; i++) {
       this.id[i] = i;
     }
@@ -37,18 +38,22 @@ class UnionFindByQuickFind {
         this.id[i] = qId;
       }
     }
+    this.groups--;
   }
 
   getGroups() {
-    return new Set(this.id).size;
+    return this.groups;
   }
 }
 
 class UnionFindByQuickUnion {
   constructor(elementsNum) {
-    this.parent = [];
+    this.parent = []; // track the parent id of each element
+    this.children = []; // track the number of elements in each group rooted by i
+    this.groups = elementsNum;
     for (let i = 0; i < elementsNum; i++) {
       this.parent[i] = i;
+      this.children[i] = 1;
     }
   }
 
@@ -84,16 +89,20 @@ class UnionFindByQuickUnion {
     const pParent = this.find(p);
     const qParent = this.find(q);
     if (pParent === qParent) return;
-    this.parent[pParent] = qParent;
+
+    if (this.children[pParent] > this.children[qParent]) {
+      this.children[pParent] += this.children[qParent];
+      this.parent[qParent] = pParent;
+    } else {
+      this.children[qParent] += this.children[pParent];
+      this.parent[pParent] = qParent;
+    }
+
+    this.groups--;
   }
 
   getGroups() {
-    const set = new Set();
-    for (let i = 0; i < this.parent.length; i++) {
-      const iParent = this.find(i);
-      set.add(iParent);
-    }
-    return set.size;
+    return this.groups;
   }
 }
 
