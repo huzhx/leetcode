@@ -124,6 +124,8 @@ class UnionFindByQuickUnionWithRankOpt {
    */
   find(p) {
     while (p !== this.parent[p]) {
+      // path compression
+      this.parent[p] = this.parent[this.parent[p]];
       p = this.parent[p];
     }
     return p;
